@@ -1,2 +1,2 @@
 # fsociety
-Hackathon project at VMware: Lorem ipsum generator
+Hackathon project at VMware: Smart Lorem ipsum generator
