@@ -10,6 +10,7 @@ def clean(raw_tweets):
         tweet = tweet.lower()
         tweet = re.sub("(@[a-zA-Z0-9]*)", "", tweet)
         tweet = re.sub("(http[^\s]*)", "", tweet)
+        tweet = re.sub("(&[a-z]*;)", "", tweet)
 
         cleaned_tweets.append(tweet.strip())
 
