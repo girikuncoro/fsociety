@@ -6,14 +6,20 @@ from util.flask_common import (
     ensure_param
 )
 import re
+# Twitter data fetcher
 from twitter import *
 from util.twitter import (
     clean,
     get_paragraph
 )
 
+# Dummy data fetcher
 from dummy_data import dummy_data
+# Reddit data fetcher
 from f_aggr import GetArticleText
+# Reuters data fetcher
+from search.src.scripts.semantic_search import get_ids
+from util.reuters import get_reuters_paragraph
 
 # Default paragraph count
 DEFAULT_COUNT = 5
@@ -83,13 +89,11 @@ def paragraph_reuters():
 
     query = request.form['query']
     # Fetch query from topic modelling
-    data = twitter.search.tweets(
-        q="{} AND -filter:retweets".format(query), count=100, lang="en")
-    cleaned_data = clean(data['statuses'])
+    data_ids = get_ids(query)
+    # cleaned_data = clean(data['statuses'])
 
     return {
-        'data': get_paragraph(
-            count=paragraph_count, tweets=cleaned_data),
+        'data': get_reuters_paragraph(data_ids, paragraph_count),
         'query': query,
         'paragraph_count': paragraph_count
     }
