@@ -6,13 +6,22 @@ def get_reuters_paragraph(ids, count):
 	ids_required = count * SENTENCES_IN_PARAGRAPH
 	ids = ids[:ids_required]
 
-	sentences = get_sentences(ids)
-	print 'Senteces: ', sentences
+	sentences = []
+	try:
+		sentences = get_sentences(ids)
+	except(e):
+		print 'Topic not supported'
+
+	if not sentences:
+		return []
 
 	paragraphs = []
 	for i in range(count):
 		text = ''
 		for j in range(SENTENCES_IN_PARAGRAPH):
-			text += ' ' + sentences.pop()[0][0]
+			sentence = sentences.pop()
+			if not sentence:
+				continue
+			text += ' ' + sentence[0][0]
 		paragraphs.append(text)
 	return paragraphs
