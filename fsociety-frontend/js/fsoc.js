@@ -7,8 +7,11 @@ let topicForm;
 let srcTwitter;
 let srcReddit;
 let srcReuters;
+let submitBtn;
 
 // Output.
+let errToggle;
+let errWell;
 let textWell;
 
 // Inflight.
@@ -45,6 +48,19 @@ function populateOutput(text) {
     textWell.removeAttribute('hidden');
 }
 
+function populateError(text) {
+  // Hide Error Panel (if currently visible from previous submission).
+  if (errToggle.getAttribute('hidden') === null)
+    errToggle.setAttribute('hidden', '');
+
+  // Populate Error Panel.
+  errWell.innerHTML = text;
+
+  // Show Error panel.
+  if (text !== '')
+    errToggle.removeAttribute('hidden');
+}
+
 function submitSucceed(evt) {
   // Parse or Abort.
   if (request.status >= 400) {
@@ -55,8 +71,8 @@ function submitSucceed(evt) {
   try {
     dataObj = JSON.parse(request.responseText);
   } catch (ex) {
-    populateOutput('Error parsing server response!');
-    request = null;
+    populateError('Error parsing server response!');
+    submitCleanup();
     return;
   }
 
@@ -70,16 +86,31 @@ function submitSucceed(evt) {
   outStr += '</p>';
 
   // Display.
+  populateError('');
   populateOutput(outStr);
-  request = null;
+  submitCleanup();
 }
 
 function submitFail(evt) {
   let desc = request.statusText;
   if (desc === '')
     desc = 'Failed to Connect to Backend';
-  populateOutput('Error ' + request.status + ': ' + desc);
+  populateError('<strong>Error&nbsp;' + request.status + ':</strong> ' + desc);
+  submitCleanup();
+}
+
+function submitCleanup() {
+  // Re-enable input fields.
   request = null;
+  numParaField.readOnly = false;
+  topicField.readOnly = false;
+  topicForm.readOnly = false;
+  srcTwitter.readOnly = false;
+  srcReddit.readOnly = false;
+  srcReuters.readOnly = false;
+  submitBtn.disabled = false; 
+  submitBtn.className = 'btn btn-primary';
+  submitBtn.innerHTML = 'Get Filler';
 }
 
 function submitStart() {
@@ -88,6 +119,15 @@ function submitStart() {
     return;
 
   // Prepare input.
+  numParaField.readOnly = true;
+  topicField.readOnly = true;
+  topicForm.readOnly = true;
+  srcTwitter.readOnly = true;
+  srcReddit.readOnly = true;
+  srcReuters.readOnly = true;
+  submitBtn.disabled = true; 
+  submitBtn.className = 'btn btn-info';
+  submitBtn.innerHTML = 'Fetching...';
   let suffix;
   if (srcReuters.checked) {
     suffix = 'reuters';
@@ -112,10 +152,13 @@ function init() {
   numParaField = document.getElementById('numParaField');
   topicField = document.getElementById('topicField');
   topicForm = document.getElementById('topicForm');
-  textWell = document.getElementById('textWell');
   srcTwitter = document.getElementById('srcTwitter');
   srcReddit = document.getElementById('srcReddit');
   srcReuters = document.getElementById('srcReuters');
+  submitBtn = document.getElementById('submitBtn');
+  errToggle = document.getElementById('errToggle');
+  errWell = document.getElementById('errWell');
+  textWell = document.getElementById('textWell');
 
   // Set submit listener.
   topicForm.addEventListener('submit', submitStart);

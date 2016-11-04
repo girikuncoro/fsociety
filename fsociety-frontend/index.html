@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>The Bootstrappening</title>
+    <title>FSociety Lorem Ipsum Henerator</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -21,8 +21,8 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="container">
       <div class="jumbotron">
-        <h1>FSociety Frontend</h1>
-        <p>This is a WIP of what will become the frontend for our team's Lorem Ipsum generator.</p>
+        <h1>FSociety Lorem&nbsp;Ipsum</h1>
+        <p>Platform-Scraping Filler&nbsp;Text Generator</p>
       </div>
     </div>
 
@@ -49,7 +49,7 @@
               <div class="input-group-addon">paragraph(s) about</div>
               <input type="text" id="topicField" name="query" class="form-control" value="" placeholder="Search Topic..." autofocus />
               <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">Get Filler</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary">Get Filler</button>
               </span>
             </div>
           </div>
@@ -60,6 +60,13 @@
     <!-- Filler area for vertical padding -->
     <div class="form-group">
       &nbsp;
+    </div>
+
+    <!-- Error area -->
+    <div class="container" id="errToggle" hidden>
+      <div class="alert alert-danger" role="alert" id="errWell">
+        How Unfortunate...
+      </div>
     </div>
 
     <!-- Output area -->
