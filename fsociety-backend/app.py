@@ -1,4 +1,5 @@
 from flask import Flask, abort, json, request
+from flask_cors import CORS, cross_origin
 from util.flask_common import (
     jsonify,
     enable_json_error,
@@ -7,6 +8,7 @@ from util.flask_common import (
 from dummy_data import dummy_data
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
