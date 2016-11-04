@@ -13,6 +13,7 @@ from util.twitter import (
 )
 
 from dummy_data import dummy_data
+from f_aggr import GetArticleText
 
 # Default paragraph count
 DEFAULT_COUNT = 5
@@ -89,6 +90,25 @@ def paragraph_reuters():
     return {
         'data': get_paragraph(
             count=paragraph_count, tweets=cleaned_data),
+        'query': query,
+        'paragraph_count': paragraph_count
+    }
+
+@app.route('/api/v1/paragraph/reddit', methods=['POST'])
+@ensure_param('query')
+@jsonify
+def paragraph_reddit():
+    paragraph_count = DEFAULT_COUNT
+    if 'paragraph_count' in request.form:
+        paragraph_count = int(request.form['paragraph_count'])
+
+    query = request.form['query']
+    # Fetch query from topic modelling
+    data = GetArticleText(query, paragraph_count)
+    print data
+
+    return {
+        'data': data,
         'query': query,
         'paragraph_count': paragraph_count
     }

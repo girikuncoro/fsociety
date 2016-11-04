@@ -1,5 +1,7 @@
 import praw, sys, io
 import json
+import nltk
+nltk.data.path.append('./nltk_data')
 from nltk.corpus import stopwords
 from difflib import SequenceMatcher
 from fuzzywuzzy import fuzz
