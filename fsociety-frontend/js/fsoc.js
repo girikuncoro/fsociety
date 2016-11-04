@@ -78,10 +78,14 @@ function submitSucceed(evt) {
 
   // Assemble String.
   let outStr = '<p>';
-  for (let idx = 0; idx < dataObj.data.length; ++idx) {
-    if (idx !== 0)
-      outStr += '</p><p>';
-    outStr += escapeHTML(dataObj.data[idx]);
+  if (dataObj.data.length !== 0) {
+    for (let idx = 0; idx < dataObj.data.length; ++idx) {
+      if (idx !== 0)
+        outStr += '</p><p>';
+      outStr += escapeHTML(dataObj.data[idx]);
+    }
+  } else {
+    outStr += 'No Data on this Topic';
   }
   outStr += '</p>';
 
