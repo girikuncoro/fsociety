@@ -26,28 +26,46 @@
       </div>
     </div>
 
+    <!-- Input area -->
     <div class="container">
+      <div class="row">
+        <div class="form-group">
+          <div class="col-lg-6">
+            <label>From Source:</label>
+          </div>
+          <div class="col-lg-6">
+            <label class="radio-inline"><input type="radio" id="srcTwitter" name="source" checked />Twitter</label>
+            <label class="radio-inline"><input type="radio" id="srcReddit" name="source" />Reddit</label>
+            <label class="radio-inline"><input type="radio" id="srcReuters" name="source" />Reuters</label>
+          </div>
+        </div>
+      </div>
       <form id="topicForm" method="post" action="javascript:void(0);">
-        <div class="col-lg-6">
-          <div class="input-group">
-            <input type="number" id="numParaField" name="paragraph_count" class="form-control" min="1" max="99" step="1" value="15" placeholder="#" />
-            <span class="input-group-addon">paragraph(s) of</span>
-            <input type="text" id="topicField" name="query" class="form-control" value="" placeholder="Topic..." aria-label="Text input" autofocus />
-            <span class="input-group-btn">
-              <button class="btn btn-primary" type="submit">Get Filler</button>
-            </span>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="input-group">
+              <div class="input-group-addon">Fetch</div>
+              <input type="number" id="numParaField" name="paragraph_count" class="form-control" min="1" max="99" step="1" value="5" placeholder="#" />
+              <div class="input-group-addon">paragraph(s) about</div>
+              <input type="text" id="topicField" name="query" class="form-control" value="" placeholder="Search Topic..." autofocus />
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">Get Filler</button>
+              </span>
+            </div>
           </div>
         </div>
       </form>
     </div>
 
+    <!-- Filler area for vertical padding -->
     <div class="form-group">
       &nbsp;
     </div>
 
+    <!-- Output area -->
     <div class="container">
       <div class="well" id="textWell" hidden>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+        <p></p>
       </div>
     </div>
 
