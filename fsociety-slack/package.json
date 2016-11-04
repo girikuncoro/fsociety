@@ -1,0 +1,14 @@
+{
+  "name": "fsociety-slack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "port=9000 node slack-bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "botkit": "^0.2.2",
+    "superagent": "^2.2.0"
+  }
+}
