@@ -104,11 +104,10 @@ function submitCleanup() {
   request = null;
   numParaField.readOnly = false;
   topicField.readOnly = false;
-  topicForm.readOnly = false;
-  srcTwitter.readOnly = false;
-  srcReddit.readOnly = false;
-  srcReuters.readOnly = false;
-  submitBtn.disabled = false; 
+  srcTwitter.disabled = false;
+  srcReddit.disabled = false;
+  srcReuters.disabled = false;
+  submitBtn.disabled = false;
   submitBtn.className = 'btn btn-primary';
   submitBtn.innerHTML = 'Get Filler';
 }
@@ -121,11 +120,10 @@ function submitStart() {
   // Prepare input.
   numParaField.readOnly = true;
   topicField.readOnly = true;
-  topicForm.readOnly = true;
-  srcTwitter.readOnly = true;
-  srcReddit.readOnly = true;
-  srcReuters.readOnly = true;
-  submitBtn.disabled = true; 
+  srcTwitter.disabled = true;
+  srcReddit.disabled = true;
+  srcReuters.disabled = true;
+  submitBtn.disabled = true;
   submitBtn.className = 'btn btn-info';
   submitBtn.innerHTML = 'Fetching...';
   let suffix;
