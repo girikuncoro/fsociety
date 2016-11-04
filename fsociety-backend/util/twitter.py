@@ -23,3 +23,4 @@ def get_paragraph(count, tweets):
 			text += tweets.pop()
 		paragraphs.append(text)
 	return paragraphs
+	

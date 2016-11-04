@@ -4,3 +4,6 @@
 # Virtual env related
 venv
 lib
+
+# Credentials
+config.py

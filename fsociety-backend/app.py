@@ -14,6 +14,8 @@ from util.twitter import (
 
 from dummy_data import dummy_data
 
+# Default paragraph count
+DEFAULT_COUNT = 5
 
 app = Flask(__name__)
 CORS(app)
@@ -24,9 +26,6 @@ execfile("config.py", config)
 
 twitter = Twitter(
     auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
-
-# Default paragraph count
-DEFAULT_COUNT = 15
 
 
 @app.route('/')
@@ -62,6 +61,27 @@ def paragraph_twitter():
 
     query = request.form['query']
     # Fetch query from Twitter search API
+    data = twitter.search.tweets(
+        q="{} AND -filter:retweets".format(query), count=100, lang="en")
+    cleaned_data = clean(data['statuses'])
+
+    return {
+        'data': get_paragraph(
+            count=paragraph_count, tweets=cleaned_data),
+        'query': query,
+        'paragraph_count': paragraph_count
+    }
+
+@app.route('/api/v1/paragraph/reuters', methods=['POST'])
+@ensure_param('query')
+@jsonify
+def paragraph_reuters():
+    paragraph_count = DEFAULT_COUNT
+    if 'paragraph_count' in request.form:
+        paragraph_count = int(request.form['paragraph_count'])
+
+    query = request.form['query']
+    # Fetch query from topic modelling
     data = twitter.search.tweets(
         q="{} AND -filter:retweets".format(query), count=100, lang="en")
     cleaned_data = clean(data['statuses'])
