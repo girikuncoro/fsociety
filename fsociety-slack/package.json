@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "port=9000 nodemon slack-bot.js",
+    "start": "port=9000 node slack-bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
