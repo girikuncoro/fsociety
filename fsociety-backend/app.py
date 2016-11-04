@@ -5,10 +5,28 @@ from util.flask_common import (
     enable_json_error,
     ensure_param
 )
+import re
+from twitter import *
+from util.twitter import (
+    clean,
+    get_paragraph
+)
+
 from dummy_data import dummy_data
+
 
 app = Flask(__name__)
 CORS(app)
+
+# Load Twitter credentials
+config = {}
+execfile("config.py", config)
+
+twitter = Twitter(
+    auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
+
+# Default paragraph count
+DEFAULT_COUNT = 15
 
 
 @app.route('/')
@@ -20,17 +38,38 @@ def hello_world():
 def preprocess_data():
     return 'Preprocess should work here'
 
-@app.route('/api/v1/paragraph', methods=['POST'])
+@app.route('/api/v1/paragraph/dummy', methods=['POST'])
 @ensure_param('query')
 @jsonify
-def paragraph():
-    paragraph_count = 15  # default count
+def paragraph_dummy():
+    paragraph_count = DEFAULT_COUNT
     if 'paragraph_count' in request.form:
         paragraph_count = request.form['paragraph_count']
 
     return {
         'data': dummy_data,
         'query': request.form['query'],
+        'paragraph_count': paragraph_count
+    }
+
+@app.route('/api/v1/paragraph/twitter', methods=['POST'])
+@ensure_param('query')
+@jsonify
+def paragraph_twitter():
+    paragraph_count = DEFAULT_COUNT
+    if 'paragraph_count' in request.form:
+        paragraph_count = int(request.form['paragraph_count'])
+
+    query = request.form['query']
+    # Fetch query from Twitter search API
+    data = twitter.search.tweets(
+        q="{} AND -filter:retweets".format(query), count=100, lang="en")
+    cleaned_data = clean(data['statuses'])
+
+    return {
+        'data': get_paragraph(
+            count=paragraph_count, tweets=cleaned_data),
+        'query': query,
         'paragraph_count': paragraph_count
     }
 
