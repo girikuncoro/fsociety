@@ -14,58 +14,58 @@ DB_NAME = 'hackme'
 REUTER_FILE = 'reuters_sentences.list'
 
 def insert_in_db(filename):
-	# Open database connection
-	db = mysql.connect(host=DB_HOST, port=DB_PORT,
-	        user=DB_USER, passwd=DB_PASS,
-	        db=DB_NAME)
+    # Open database connection
+    db = mysql.connect(host=DB_HOST, port=DB_PORT,
+            user=DB_USER, passwd=DB_PASS,
+            db=DB_NAME)
 
-	# Create new db cursor
-	cursor = db.cursor()
+    # Create new db cursor
+    cursor = db.cursor()
 
-	# Load the sentences from the pickle file
-	sentences = pickle.load(open(filename,'rb'))
+    # Load the sentences from the pickle file
+    sentences = pickle.load(open(filename,'rb'))
 
-	for sentence in sentences:
-		sen = ''
-		for word in sentence:
-			sen += word + ' '
-		sen = re.sub("\"", "\'", sen)
+    for sentence in sentences:
+        sen = ''
+        for word in sentence:
+            sen += word + ' '
+        sen = re.sub("\"", "\'", sen)
 
-		sql = 'INSERT INTO `sentence`(`content`) VALUES (\"' + sen + '\")'
+        sql = 'INSERT INTO `sentence`(`content`) VALUES (\"' + sen + '\")'
 
-		# insert to the database
-		try:
-		    cursor.execute(sql)
-		    db.commit()
-		except mysql.Error as err:
-		    print("Something went wrong: {}".format(err))
-		    db.rollback()
+        # insert to the database
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except mysql.Error as err:
+            print("Something went wrong: {}".format(err))
+            db.rollback()
 
 
-	# Close the DB connection
-	db.close()
+    # Close the DB connection
+    db.close()
 
 def get_sentences(ids):
-	# Open database connection
-	db = mysql.connect(host=DB_HOST, port=DB_PORT,
-	        user=DB_USER, passwd=DB_PASS,
-	        db=DB_NAME)
+    # Open database connection
+    db = mysql.connect(host=DB_HOST, port=DB_PORT,
+            user=DB_USER, passwd=DB_PASS,
+            db=DB_NAME)
 
-	# Create new db cursor
-	cursor = db.cursor()
-	sentences = []
+    # Create new db cursor
+    cursor = db.cursor()
+    sentences = []
 
-	for id in ids:
-		sql = 'SELECT `content` FROM `sentence` WHERE SEN_ID = %d' % id
-		cursor.execute(sql)
-		sentences.append(cursor.fetchall())
+    for id in ids:
+        sql = 'SELECT `content` FROM `sentence` WHERE SEN_ID = %d' % id
+        cursor.execute(sql)
+        sentences.append(cursor.fetchall())
 
-	return sentences
-	#try:
-	#    db.commit()
-	#except mysql.Error as err:
-	 #   print("Something went wrong: {}".format(err))
-	  #  db.rollback()
+    return sentences
+    #try:
+    #    db.commit()
+    #except mysql.Error as err:
+     #   print("Something went wrong: {}".format(err))
+      #  db.rollback()
 
 #insert_in_db(REUTER_FILE)
 #ids = [1,2,3]
