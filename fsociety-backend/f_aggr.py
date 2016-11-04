@@ -6,6 +6,35 @@ import urllib2
 import sys
 from f_scrape import ReturnSearchResults
 
+
+"""
+    breakintoparas(num_para)
+
+    Break into number of paragraphs passed
+"""
+def breakintoparas(num_paras, raw_text):
+    para_list = []
+    para_text = ''
+    words  = raw_text.strip().split()
+    words_in_a_para = len(words)/num_paras
+    count = 0
+
+    for word in words:
+        if len(para_list) == num_paras:
+            break
+        #print(word)
+        para_text = para_text + ' ' + word
+        #print(para_text)
+        count = count + 1
+        if count >= words_in_a_para:
+            para_list.append(para_text)
+            para_text = ''
+            count = 0
+        else:
+            continue
+
+    return para_list
+
 """
     GetArticleText(string query)
 
@@ -15,7 +44,7 @@ from f_scrape import ReturnSearchResults
     Dictionary has keys os url, summary and text for respective fields
 
 """
-def GetArticleText(query):
+def GetArticleText(query, para_count):
     """Fire the reddit engine to retrieve url"""
     ReturnSearchResults(query)
     result = []
@@ -56,11 +85,20 @@ def GetArticleText(query):
                     count += 1
 
             f.close()
-            return result
+
+            #result has a list of dicts
+            raw_text = ""
+            for dicts in result:
+                raw_text = raw_text + dicts['text']
+
+            para_list = breakintoparas(para_count, raw_text)
+
+
+            return para_list
 
 
 def test():
-    result = GetArticleText("Fuck Trump")
-    print(result)
+    para_list = GetArticleText("Fuck Trump", 5)
+    print(para_list)
 
-test()
+#test()
