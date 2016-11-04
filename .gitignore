@@ -8,3 +8,6 @@ lib
 
 # Credentials
 config.py
+
+# temp data files
+*.nb
