@@ -18,8 +18,8 @@ from dummy_data import dummy_data
 # Reddit data fetcher
 from f_aggr import GetArticleText
 # Reuters data fetcher
-from search.src.scripts.semantic_search import get_ids
-from util.reuters import get_reuters_paragraph
+#from search.src.scripts.semantic_search import get_ids
+#from util.reuters import get_reuters_paragraph
 
 # Default paragraph count
 DEFAULT_COUNT = 5
@@ -29,7 +29,7 @@ CORS(app)
 
 # Load Twitter credentials
 config = {}
-execfile("config.py", config)
+execfile("/app/fsociety-backend/config.py", config)
 
 twitter = Twitter(
     auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
@@ -78,7 +78,7 @@ def paragraph_twitter():
         'query': query,
         'paragraph_count': paragraph_count
     }
-
+"""
 @app.route('/api/v1/paragraph/reuters', methods=['POST'])
 @ensure_param('query')
 @jsonify
@@ -97,7 +97,7 @@ def paragraph_reuters():
         'query': query,
         'paragraph_count': paragraph_count
     }
-
+"""
 @app.route('/api/v1/paragraph/reddit', methods=['POST'])
 @ensure_param('query')
 @jsonify

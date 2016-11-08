@@ -145,7 +145,7 @@ function submitStart() {
   request.addEventListener("load", submitSucceed);
   request.addEventListener("error", submitFail);
   request.addEventListener("abort", submitFail);
-  request.open('POST', 'http://localhost:5000/api/v1/paragraph/' + suffix, true);
+  request.open('POST', '/api/v1/paragraph/' + suffix, true);
   request.send(data);
 }
 
